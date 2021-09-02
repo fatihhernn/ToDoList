@@ -13,8 +13,6 @@ import com.fatihhernn.todoapp.databinding.FragmentListBinding
 class ListFragment : Fragment() {
 
     private var _binding: FragmentListBinding? = null
-    // This property is only valid between onCreateView and
-// onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -23,11 +21,18 @@ class ListFragment : Fragment() {
     ): View? {
         _binding= FragmentListBinding.inflate(inflater,container,false)
 
+        listeners()
+
+        return binding.root
+    }
+
+    private fun listeners(){
         binding.floatingActionButton.setOnClickListener{
             findNavController() .navigate(R.id.action_listFragment_to_addFragment)
         }
-
-        return binding.root
+        binding.listLayout.setOnClickListener {
+            findNavController().navigate(R.id.action_listFragment_to_updateFragment)
+        }
     }
 
     override fun onDestroyView() {

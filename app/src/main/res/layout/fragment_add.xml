@@ -9,46 +9,48 @@
 
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/title_et"
         android:layout_width="0dp"
         android:layout_height="60dp"
+        android:background="@drawable/custom_input"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="@string/title"
+        android:inputType="textPersonName"
         android:paddingStart="24dp"
         android:paddingEnd="24dp"
-        android:background="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/spinner_priority"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginTop="8dp"
+        android:entries="@array/priorities"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
-        android:entries="@array/priorities"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        android:background="@drawable/custom_input"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.5"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/title_et" />
 
     <EditText
-        android:id="@+id/editTextTextMultiLine"
+        android:id="@+id/description_editText"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:hint="@string/description"
         android:ems="10"
-        android:paddingStart="24dp"
-        android:paddingEnd="24dp"
-        android:paddingTop="16dp"
+        android:background="@drawable/custom_input"
         android:gravity="start|top"
+        android:hint="@string/description"
         android:inputType="textMultiLine"
+        android:paddingStart="24dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner_priority" />
 </androidx.constraintlayout.widget.ConstraintLayout>

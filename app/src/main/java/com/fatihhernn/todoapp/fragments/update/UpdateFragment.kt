@@ -1,10 +1,8 @@
 package com.fatihhernn.todoapp.fragments.update
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.fatihhernn.todoapp.R
 
 
@@ -15,8 +13,18 @@ class UpdateFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
+        setMenu()
+
         return inflater.inflate(R.layout.fragment_update, container, false)
+    }
+
+    private fun setMenu() {
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.update_menu_fragment,menu)
     }
 
 

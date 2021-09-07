@@ -1,4 +1,4 @@
-package com.fatihhernn.data
+package com.fatihhernn.todoapp.data.models
 
 enum class Priority {
     HIGH,

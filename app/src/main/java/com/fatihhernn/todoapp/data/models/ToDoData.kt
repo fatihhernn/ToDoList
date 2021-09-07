@@ -1,4 +1,4 @@
-package com.fatihhernn.data
+package com.fatihhernn.todoapp.data.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -9,6 +9,6 @@ data class ToDoData(
     @PrimaryKey(autoGenerate = true)
     var id:Int,
     var title:String,
-    var priority:Priority,
+    var priority: Priority,
     var description:String
 )

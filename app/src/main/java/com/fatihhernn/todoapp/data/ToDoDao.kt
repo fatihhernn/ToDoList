@@ -1,10 +1,11 @@
-package com.fatihhernn.data
+package com.fatihhernn.todoapp.data
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.fatihhernn.todoapp.data.models.ToDoData
 
 @Dao
 interface ToDoDao {
@@ -13,7 +14,7 @@ interface ToDoDao {
     fun getAllData():LiveData<List<ToDoData>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertData(toDoData:ToDoData)
+    suspend fun insertData(toDoData: ToDoData)
 
 
 }

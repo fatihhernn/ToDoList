@@ -11,6 +11,7 @@ import com.fatihhernn.todoapp.R
 import com.fatihhernn.todoapp.data.viewModel.ToDoViewModel
 import com.fatihhernn.todoapp.data.models.Priority
 import com.fatihhernn.todoapp.data.models.ToDoData
+import com.fatihhernn.todoapp.data.viewModel.SharedViewModel
 import com.fatihhernn.todoapp.databinding.FragmentAddBinding
 
 
@@ -20,6 +21,7 @@ class AddFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val mToDoViewModel: ToDoViewModel by viewModels()
+    private val mSharedViewModel: SharedViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,12 +54,12 @@ class AddFragment : Fragment() {
         val mPriority=binding.spinnerPriority.selectedItem.toString()
         val mDescription=binding.descriptionEditText.text.toString()
 
-        val validation=verifyDataFromUser(mTitle,mDescription)
+        val validation=mSharedViewModel.verifyDataFromUser(mTitle,mDescription)
         if (validation){
             val newData=ToDoData(
                 0,
                 mTitle,
-                parsePriority(mPriority),
+                mSharedViewModel.parsePriority(mPriority),
                 mDescription
             )
             mToDoViewModel.insertData(newData)
@@ -69,21 +71,7 @@ class AddFragment : Fragment() {
         }
     }
 
-    private fun verifyDataFromUser(title: String,description:String):Boolean{
-        return if (TextUtils.isEmpty(title)||TextUtils.isEmpty(description)){
-            false
-        } else !(title.isEmpty()||description.isEmpty())
-    }
 
-    private fun parsePriority(priority: String):Priority{
-        return when(priority){
-            "High Priority" -> {Priority.HIGH}
-            "Medium Priority" -> {Priority.MEDIUM}
-            "Low Priority" -> {Priority.LOW}
-            else -> Priority.LOW
-        }
-
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -44,5 +44,8 @@
         <action
             android:id="@+id/action_updateFragment_to_listFragment"
             app:destination="@id/listFragment" />
+        <argument
+            android:name="currentItem"
+            app:argType="com.fatihhernn.todoapp.data.models.ToDoData" />
     </fragment>
 </navigation>

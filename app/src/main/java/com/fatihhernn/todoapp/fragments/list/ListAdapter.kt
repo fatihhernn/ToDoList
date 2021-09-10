@@ -1,18 +1,22 @@
 package com.fatihhernn.todoapp.fragments.list
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.fatihhernn.todoapp.R
 import com.fatihhernn.todoapp.data.models.Priority
 import com.fatihhernn.todoapp.data.models.ToDoData
 
 class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
-    var dataList= emptyList<ToDoData>()
+
+    private var dataList= emptyList<ToDoData>()
 
     class MyViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView){
 
@@ -24,12 +28,15 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.itemView.findViewById<TextView>(R.id.title_et).text=dataList[position].title
-        holder.itemView.findViewById<TextView>(R.id.description_editText).text=dataList[position].description
 
-        val priority=dataList[position].priority
+        holder.itemView.findViewById<TextView>(R.id.title_txt).text=dataList[position].title
+        holder.itemView.findViewById<TextView>(R.id.description_txt).text=dataList[position].description
+        holder.itemView.findViewById<ConstraintLayout>(R.id.row_background).setOnClickListener {
+            val action=ListFragmentDirections.actionListFragmentToUpdateFragment(dataList[position])
+            holder.itemView.findNavController().navigate(action)
+        }
 
-        when(priority){
+        when(dataList[position].priority){
             Priority.HIGH -> holder.itemView.findViewById<CardView>(R.id.indicator_priority).setCardBackgroundColor(ContextCompat.getColor(
                 holder.itemView.context,
                 R.color.red

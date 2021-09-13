@@ -18,6 +18,8 @@ import com.fatihhernn.todoapp.data.viewModel.ToDoViewModel
 import com.fatihhernn.todoapp.databinding.FragmentListBinding
 import com.fatihhernn.todoapp.fragments.list.adapter.ListAdapter
 import com.google.android.material.snackbar.Snackbar
+import jp.wasabeef.recyclerview.animators.LandingAnimator
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 
 
 class ListFragment : Fragment() {
@@ -56,6 +58,10 @@ class ListFragment : Fragment() {
     private fun setUpRecyclerView() {
         binding.recyclerView.adapter=adapter
         binding.recyclerView.layoutManager=LinearLayoutManager(requireContext())
+
+        binding.recyclerView.itemAnimator=LandingAnimator().apply {
+            addDuration=300
+        }
 
         swipeToDelete(binding.recyclerView)
     }

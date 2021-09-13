@@ -1,6 +1,5 @@
-package com.fatihhernn.todoapp.fragments.list
+package com.fatihhernn.todoapp.fragments.list.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,10 +12,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fatihhernn.todoapp.R
 import com.fatihhernn.todoapp.data.models.Priority
 import com.fatihhernn.todoapp.data.models.ToDoData
+import com.fatihhernn.todoapp.fragments.list.ListFragmentDirections
 
 class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
 
-    private var dataList= emptyList<ToDoData>()
+    var dataList= emptyList<ToDoData>()
 
     class MyViewHolder(itemView: View) :RecyclerView.ViewHolder(itemView){
 

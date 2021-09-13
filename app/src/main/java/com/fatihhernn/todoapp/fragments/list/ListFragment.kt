@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fatihhernn.todoapp.R
+import com.fatihhernn.todoapp.data.viewModel.SharedViewModel
 import com.fatihhernn.todoapp.data.viewModel.ToDoViewModel
 import com.fatihhernn.todoapp.databinding.FragmentListBinding
 
@@ -22,6 +23,7 @@ class ListFragment : Fragment() {
     private val adapter:ListAdapter by lazy { ListAdapter() }
 
     private val mToDoViewModel:ToDoViewModel by viewModels()
+    private val mSharedViewModel:SharedViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,7 +35,11 @@ class ListFragment : Fragment() {
         binding.recyclerView.layoutManager=LinearLayoutManager(requireContext())
 
         mToDoViewModel.getAllData.observe(viewLifecycleOwner, Observer { data ->
+            mSharedViewModel.checkIfDatabaseEmpty(data)
             adapter.setData(data)
+        })
+        mSharedViewModel.emptyDatabase.observe(viewLifecycleOwner, Observer {
+            showEmptyDatabaseViews(it)
         })
 
         listeners()
@@ -43,6 +49,15 @@ class ListFragment : Fragment() {
         return binding.root
     }
 
+    private fun showEmptyDatabaseViews(emptyDatabase:Boolean) {
+       if (emptyDatabase){
+           binding.noDataImageView.visibility=View.VISIBLE
+           binding.noDataTextView.visibility=View.VISIBLE
+       }else{
+           binding.noDataImageView.visibility=View.INVISIBLE
+           binding.noDataTextView.visibility=View.INVISIBLE
+       }
+    }
 
 
     private fun setMenu() {

@@ -32,14 +32,13 @@
         android:focusable="true" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/noDataImageView"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:alpha="0.5"
+        android:alpha="0.3"
         android:background="@color/white"
         android:scaleType="fitXY"
         android:src="@drawable/ic_no_data"
-        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,15 +46,14 @@
         app:layout_constraintVertical_bias="0.32" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/noDataTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:alpha="0.5"
         android:text="@string/no_data"
         android:textSize="16sp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="@+id/imageButton"
-        app:layout_constraintStart_toStartOf="@+id/imageButton"
-        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+        app:layout_constraintEnd_toEndOf="@+id/noDataImageView"
+        app:layout_constraintStart_toStartOf="@+id/noDataImageView"
+        app:layout_constraintTop_toBottomOf="@+id/noDataImageView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -78,7 +78,6 @@ class ListFragment : Fragment() {
                 //Delete Item
                 mToDoViewModel.deleteItem(deletedItem)
                 adapter.notifyItemChanged(viewHolder.adapterPosition)
-                Toast.makeText(requireContext(),"Successfully Removed : ${deletedItem.title}",Toast.LENGTH_LONG).show()
 
                 //Restore Deleted Item
                 restoredDeletedData(viewHolder.itemView,deletedItem,viewHolder.adapterPosition)

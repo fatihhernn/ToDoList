@@ -8,6 +8,7 @@ import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.fatihhernn.todoapp.R
 import com.fatihhernn.todoapp.data.models.Priority
@@ -55,7 +56,9 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.MyViewHolder>() {
     override fun getItemCount(): Int =dataList.size
 
     fun setData(toDoData:List<ToDoData>){
+        val toDoDiffUtil=ToDoDiffUtil(dataList,toDoData)
+        val toDoDiffResult=DiffUtil.calculateDiff(toDoDiffUtil)
         this.dataList=toDoData
-        notifyDataSetChanged()
+        toDoDiffResult.dispatchUpdatesTo(this)
     }
 }

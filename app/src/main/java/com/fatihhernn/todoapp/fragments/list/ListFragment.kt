@@ -3,6 +3,7 @@ package com.fatihhernn.todoapp.fragments.list
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -22,7 +23,7 @@ import jp.wasabeef.recyclerview.animators.LandingAnimator
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 
 
-class ListFragment : Fragment() {
+class ListFragment : Fragment(),SearchView.OnQueryTextListener {
 
     private var _binding: FragmentListBinding? = null
     private val binding get() = _binding!!
@@ -40,13 +41,9 @@ class ListFragment : Fragment() {
 
         setUpRecyclerView()
 
-        mToDoViewModel.getAllData.observe(viewLifecycleOwner, Observer { data ->
-            mSharedViewModel.checkIfDatabaseEmpty(data)
-            adapter.setData(data)
-        })
-        mSharedViewModel.emptyDatabase.observe(viewLifecycleOwner, Observer {
-            showEmptyDatabaseViews(it)
-        })
+        getAllData()
+
+        showEmptyView()
 
         listeners()
 
@@ -55,11 +52,24 @@ class ListFragment : Fragment() {
         return binding.root
     }
 
+    private fun showEmptyView() {
+        mSharedViewModel.emptyDatabase.observe(viewLifecycleOwner, Observer {
+            showEmptyDatabaseViews(it)
+        })
+    }
+
+    private fun getAllData() {
+        mToDoViewModel.getAllData.observe(viewLifecycleOwner, Observer { data ->
+            mSharedViewModel.checkIfDatabaseEmpty(data)
+            adapter.setData(data)
+        })
+    }
+
     private fun setUpRecyclerView() {
         binding.recyclerView.adapter=adapter
         binding.recyclerView.layoutManager=LinearLayoutManager(requireContext())
 
-        binding.recyclerView.itemAnimator=LandingAnimator().apply {
+        binding.recyclerView.itemAnimator=SlideInUpAnimator().apply {
             addDuration=300
         }
 
@@ -120,6 +130,12 @@ class ListFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
             inflater.inflate(R.menu.list_fragment_menu,menu)
+
+            //search
+        val search=menu.findItem(R.id.menu_search)
+        val searchView= search.actionView as SearchView
+        searchView.isSubmitButtonEnabled=true
+        searchView.setOnQueryTextListener(this)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -128,6 +144,31 @@ class ListFragment : Fragment() {
         }
         return super.onOptionsItemSelected(item)
     }
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        if(query!=null){
+            searchThroughDatabase(query)
+        }
+        return true
+    }
+    override fun onQueryTextChange(query: String?): Boolean {
+        if(query!=null){
+            searchThroughDatabase(query)
+        }
+        return true
+    }
+
+    private fun searchThroughDatabase(query: String) {
+        var searchQuery=query
+        searchQuery="%$searchQuery%"
+
+        mToDoViewModel.searchDatabase(searchQuery).observe(this, Observer { list ->
+            list.let {
+                adapter.setData(it)
+            }
+        })
+    }
+
+
 
     //Show AlertDialog to confirm Removal of All items from Database Table
     private fun confirmRemoval() {
@@ -148,6 +189,8 @@ class ListFragment : Fragment() {
         super.onDestroyView()
         _binding=null
     }
+
+
 
 
 }

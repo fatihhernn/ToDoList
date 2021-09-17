@@ -2,6 +2,7 @@ package com.fatihhernn.todoapp.fragments.list
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.GridLayout
 import android.widget.SearchView
@@ -18,6 +19,7 @@ import com.fatihhernn.todoapp.data.viewModel.ToDoViewModel
 import com.fatihhernn.todoapp.databinding.FragmentListBinding
 import com.fatihhernn.todoapp.fragments.list.adapter.ListAdapter
 import com.fatihhernn.todoapp.utils.hideKeyboard
+import com.fatihhernn.todoapp.utils.observeOnce
 import com.google.android.material.snackbar.Snackbar
 import jp.wasabeef.recyclerview.animators.LandingAnimator
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
@@ -168,10 +170,11 @@ class ListFragment : Fragment(),SearchView.OnQueryTextListener {
     }
 
     private fun searchThroughDatabase(query: String) {
+        Log.d("ListFragment","searchThroughDatabase")
         var searchQuery=query
         searchQuery="%$searchQuery%"
 
-        mToDoViewModel.searchDatabase(searchQuery).observe(this, Observer { list ->
+        mToDoViewModel.searchDatabase(searchQuery).observeOnce(this, Observer { list ->
             list.let {
                 adapter.setData(it)
             }
